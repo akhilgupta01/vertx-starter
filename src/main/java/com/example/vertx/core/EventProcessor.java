@@ -1,6 +1,5 @@
 package com.example.vertx.core;
 
-import com.example.vertx.starter.SaleTransaction;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
 
@@ -26,6 +25,7 @@ public abstract class EventProcessor<IN, OUT> extends AbstractVerticle {
   public void start() {
     vertx.eventBus().localConsumer(eventQueue, this::handleEvent);
     vertx.setPeriodic(1000, t -> emitHelper.logProgress());
+    vertx.setPeriodic(1000, t -> logProgress());
   }
 
   protected void handleEvent(Message<IN> message){
@@ -37,6 +37,10 @@ public abstract class EventProcessor<IN, OUT> extends AbstractVerticle {
       e.printStackTrace(System.out);
       message.fail(500, "The message failed");
     }
+  }
+
+  public void logProgress() {
+    System.out.println("Processed " + processedCounter.get() + " messages by " + name);
   }
 
   protected abstract OUT processEvent(IN input);

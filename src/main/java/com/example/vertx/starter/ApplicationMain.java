@@ -10,8 +10,8 @@ public class ApplicationMain {
     Vertx vertx = Vertx.vertx();
 
     vertx.deployVerticle(fileReader());
-    vertx.deployVerticle(ApplicationMain::lineToRecordMapper, new DeploymentOptions().setInstances(1));
-    vertx.deployVerticle(getSalesAggregator());
+    //vertx.deployVerticle(lineToRecordMapper());
+    //vertx.deployVerticle(getSalesAggregator());
 
 //    vertx.deployVerticle(new ComposeExample());
   }
@@ -26,7 +26,7 @@ public class ApplicationMain {
 
   private static LineToRecordMapper lineToRecordMapper() {
     return LineToRecordMapper.builder()
-      .name("record.mapper")
+      .name("record.mapper2")
       .eventQueue("file.reader.out")
       .build();
   }
@@ -34,7 +34,7 @@ public class ApplicationMain {
   private static SalesAggregator getSalesAggregator() {
     return SalesAggregator.builder()
       .name("sales.aggregator")
-      .eventQueue("record.mapper.out").build();
+      .eventQueue("record.mapper2.out").build();
   }
 }
 
