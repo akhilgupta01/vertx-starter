@@ -21,7 +21,7 @@ public abstract class EventSink<IN> extends AbstractVerticle {
   @Override
   public void start() {
     vertx.eventBus()
-      .consumer(eventQueue, this::handleEvent)
+      .localConsumer(eventQueue, this::handleEvent)
       .exceptionHandler(this::handleException);
     vertx.setPeriodic(1000, t -> logProgress());
   }

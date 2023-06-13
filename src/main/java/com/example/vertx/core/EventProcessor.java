@@ -1,7 +1,6 @@
 package com.example.vertx.core;
 
 import com.example.vertx.starter.SaleTransaction;
-import com.example.vertx.starter.SalesTransactionCodec;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.Message;
 
@@ -25,8 +24,7 @@ public abstract class EventProcessor<IN, OUT> extends AbstractVerticle {
 
   @Override
   public void start() {
-    vertx.eventBus().registerDefaultCodec(SaleTransaction.class, new SalesTransactionCodec());
-    vertx.eventBus().consumer(eventQueue, this::handleEvent);
+    vertx.eventBus().localConsumer(eventQueue, this::handleEvent);
     vertx.setPeriodic(1000, t -> emitHelper.logProgress());
   }
 

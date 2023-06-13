@@ -1,6 +1,7 @@
 package com.example.vertx.core;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.eventbus.DeliveryOptions;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,7 +18,7 @@ public class EmitHelper<OUT> implements EventEmitter<OUT> {
 
   @Override
   public void emit(OUT message) {
-    verticle.getVertx().eventBus().publish(eventQueue, message);
+    verticle.getVertx().eventBus().publish(eventQueue, message, new DeliveryOptions().setLocalOnly(true));
     emittedCount.getAndIncrement();
   }
 

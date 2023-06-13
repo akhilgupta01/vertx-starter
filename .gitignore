@@ -1,6 +1,8 @@
 ### Vert.x ###
 .vertx/
 
+car_sales_data.csv
+
 ### Eclipse ###
 
 .metadata
